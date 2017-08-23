@@ -60,22 +60,22 @@ namespace css_viewmodels_and_.net.Controllers
         public IActionResult References()
         {
             var commentList = new List<ReferenceModel>();
-            var newComment = new ReferenceModel();
 
             using (var reader = new StreamReader(System.IO.File.Open("comments.csv", FileMode.Open)))
                 while (reader.Peek() >= 0)
                 {
                     var user = reader.ReadToEnd();
                     var data = user.Split(',');
-                    for (int i = 0; i < data.Length -3; i+=4)
+                    for (int i = 0; i < data.Length -4; i+=4)
                     {
+                        var newComment = new ReferenceModel();
                         newComment.Message = data[i];
                         newComment.Name = data[i+1];
                         newComment.Email = data[i+2];
                         newComment.Website = data[i+3];
                         commentList.Add(newComment);
                     }
-                }
+                } 
             return View(commentList);
         }
 
@@ -93,15 +93,11 @@ namespace css_viewmodels_and_.net.Controllers
         [HttpPost]
         public IActionResult References(string message, string name, string email, string website)
         {
-            ViewData["message"] = message;
-            ViewData["name"] = name;
-            ViewData["email"] = email;
-            ViewData["website"] = website;
             using (var writer = new StreamWriter(System.IO.File.Open($"comments.csv", FileMode.Append)))
             {
-                writer.WriteLine($"{message},{name},{email},{website}");
+                writer.WriteLine($"'{message}',{name},{email},{website},");
             }
-            return View();
+            return View("Index");
         }
     }
 }

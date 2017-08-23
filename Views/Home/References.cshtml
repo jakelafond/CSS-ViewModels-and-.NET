@@ -11,7 +11,7 @@
     <button type="submit">Add Message</button>
 </form>
 <div>
-    @model List<ReferenceModel>
+@model List<ReferenceModel>
         @foreach(var item in Model)
         {
             <p>@item.Message - @item.Name</p>
