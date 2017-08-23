@@ -32,17 +32,20 @@ namespace css_viewmodels_and_.net.Controllers
         {
             var prices = new List<PriceModel>();
 
-            var serviceOne = new PriceModel{
+            var serviceOne = new PriceModel
+            {
                 Service = "Oil Change",
                 Info = "Changing your oil",
                 Price = "$20"
             };
-                var serviceTwo = new PriceModel{
+            var serviceTwo = new PriceModel
+            {
                 Service = "Fix Toilet",
                 Info = "Unclog your nastiness",
                 Price = "$30"
             };
-                var serviceThree = new PriceModel{
+            var serviceThree = new PriceModel
+            {
                 Service = "Mow Lawn",
                 Info = "What is this a rainforest?",
                 Price = "$50"
@@ -56,12 +59,40 @@ namespace css_viewmodels_and_.net.Controllers
         }
         public IActionResult References()
         {
-            ViewData["Message"] = "Add a message here";
+            var commentList = new List<ReferenceModel>();
+            var firstComment = new ReferenceModel
+            {
+                Message = "hi there",
+                Name = "tom",
+                Email = "tom@tomtom.com",
+                Website = "tom.com"
+            };
+            commentList.Add(firstComment);
 
-            return View();
+            using (var reader = new StreamReader(System.IO.File.Open("comments.csv", FileMode.Open)))
+                while (reader.Peek() >= 0)
+                {
+                    var objMessage = string.Empty;
+                    var objName = string.Empty;
+                    var objEmail = string.Empty;
+                    var objWebsite = string.Empty;
+
+                    var user = reader.ReadLine();
+                    var data = user.Split(',');
+                    for (int i = 0; i < data.Length; i+=4)
+                    {
+                        objMessage = data[i];
+                        objName = data[i+1];
+                        objEmail = data[i+2];
+                        objWebsite = data[i+3];
+                    
+                        
+                    }
+                }
+            return View(commentList);
         }
 
-        
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -79,9 +110,9 @@ namespace css_viewmodels_and_.net.Controllers
             ViewData["name"] = name;
             ViewData["email"] = email;
             ViewData["website"] = website;
-            using ( var writer = new StreamWriter(System.IO.File.Open($"comments.csv",FileMode.Append)))
+            using (var writer = new StreamWriter(System.IO.File.Open($"comments.csv", FileMode.Append)))
             {
-                writer.WriteLine($"{name},{email}");
+                writer.WriteLine($"{message},{name},{email},{website}");
             }
             return View();
         }
