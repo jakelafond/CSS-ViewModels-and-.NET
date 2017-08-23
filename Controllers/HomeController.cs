@@ -12,12 +12,18 @@ namespace css_viewmodels_and_.net.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Article-1-heading"] = "Hire a Professional Handyman - Call 12345";
             return View();
         }
+        public IActionResult PriceList()
+        {
+            ViewData["Message"] = "Prices here:";
 
+            return View();
+        }
         public IActionResult References()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Look at all the people who like me:";
 
             return View();
         }
