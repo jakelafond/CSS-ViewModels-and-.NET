@@ -3,5 +3,18 @@
 }
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
-
-<p>Use this area to provide additional information.</p>
+<table>
+    <tr>
+        <td>Service</td>
+        <td>Info</td>
+        <td>Price</td>
+@model List<PriceModel>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.Service </td>
+            <td>@item.Info </td>
+            <td>@item.Price </td>
+        </tr>
+    }
+</table>

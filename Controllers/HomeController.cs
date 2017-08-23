@@ -29,9 +29,29 @@ namespace css_viewmodels_and_.net.Controllers
         }
         public IActionResult PriceList()
         {
-            ViewData["Message"] = "Prices here:";
+            var prices = new List<PriceModel>();
 
-            return View();
+            var serviceOne = new PriceModel{
+                Service = "Oil Change",
+                Info = "Changing your oil",
+                Price = "$20"
+            };
+                var serviceTwo = new PriceModel{
+                Service = "Fix Toilet",
+                Info = "Unclog your nastiness",
+                Price = "$30"
+            };
+                var serviceThree = new PriceModel{
+                Service = "Mow Lawn",
+                Info = "What is this a rainforest?",
+                Price = "$50"
+            };
+
+            prices.Add(serviceOne);
+            prices.Add(serviceTwo);
+            prices.Add(serviceThree);
+
+            return View(prices);
         }
         public IActionResult References()
         {
