@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using css_viewmodels_and_.net.Models;
+using System.IO;
 
 namespace css_viewmodels_and_.net.Controllers
 {
@@ -55,21 +56,34 @@ namespace css_viewmodels_and_.net.Controllers
         }
         public IActionResult References()
         {
-            ViewData["Message"] = "Look at all the people who like me:";
+            ViewData["Message"] = "Add a message here";
 
             return View();
         }
 
+        
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
 
             return View();
         }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [HttpPost]
+        public IActionResult References(string message, string name, string email, string website)
+        {
+            ViewData["message"] = message;
+            ViewData["name"] = name;
+            ViewData["email"] = email;
+            ViewData["website"] = website;
+            using ( var writer = new StreamWriter(System.IO.File.Open($"comments.csv",FileMode.Append)))
+            {
+                writer.WriteLine($"{name},{email}");
+            }
+            return View();
         }
     }
 }
