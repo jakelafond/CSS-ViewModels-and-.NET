@@ -14,6 +14,7 @@
     @model List<ReferenceModel>
         @foreach(var item in Model)
         {
-            <p>@item.Message</p>
+            <p>@item.Message - @item.Name</p>
+            <p>Email - @item.Email Website - @item.Website</p>
         }
 </div>
